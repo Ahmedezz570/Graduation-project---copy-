@@ -2,6 +2,8 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+MONGO_URI="mongodb+srv://ahmedez570_db_user:LPxFOdSmub2grIGk@cluster0.ct6uclz.mongodb.net"
+JWT_SECRET = "Ezzat1234"
 const register = async (req, res) => {
   try {
     const { fullName, email, phone, password, confirmPassword } = req.body;
@@ -115,8 +117,7 @@ if (!isPasswordCorrect) {
 
 // 4. Generate JWT Token
 const token = jwt.sign(
-  { userId: user._id },
-  process.env.JWT_SECRET,
+  { userId: user._id },JWT_SECRET,
   { expiresIn: "7d" }
 );
 
