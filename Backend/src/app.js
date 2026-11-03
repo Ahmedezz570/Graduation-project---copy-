@@ -1,21 +1,24 @@
-// calling express for using to build my API
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./modules/auth/routes');
 
-// Create an instance of the Express application - app to add middleware and routes
 const app = express();
-// to control frontend access to the backend API we use cors middleware
-app.use(cors());
-// to make express to read data from frontend JSON format (ex: {name : "John" , age : 30}) we use express.json() middleware
-app.use(express.json());
 
-// My first route to test the backend API is working or not
+app.use(cors());
+
+app.use(express.json());
+app.use('/api/auth', authRoutes);
+
 app.get("/",(req , res )=>{
      res.status(200).json({
         success : true ,
         message : "Welcome to the Backend API"            
      });               
 });
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./docs/swagger");
 
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app ;
